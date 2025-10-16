@@ -2,7 +2,7 @@
  /* / Theme by: WhoisMikeJones? /////////////////////////////////////////////////////////////////////////////////////////////// */
  /* / https://discordapp.com/users/whoismikejones ///////////////////////////////////////////////////////////////////////////// */
  /* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
- 
+
  /* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
  /* / STRUCTURE /////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
  /* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
@@ -113,7 +113,7 @@ input:focus-visible {
     line-height: 18px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-image: url(https://i.imgur.com/QrTEPeQ.png);
+    background-image: url(https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png);
 }
 
 .pageLinks li a.selectedPageLink {
@@ -202,7 +202,7 @@ margin-right: 1px;
     .pageLinksDropdownProduct {
         margin-right:10px;
     }
-    
+
     .pageLinksDropdown .dropdown-arrow {
         margin-left: 10px;
         font-size: 12px;
@@ -386,7 +386,7 @@ margin-right: 1px;
     display: inline-block;
     transition: margin-top 0.3s, border-bottom-width 0.3s; /* Add transition here */
     border-radius: 7px;
-    background-image: url('https://i.imgur.com/QrTEPeQ.png');
+    background-image: url('https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png');
 }
 
 .btn-go-back {
@@ -516,7 +516,7 @@ margin-right: 1px;
     border-bottom-color:var(--button-shadow-color);
     border-bottom-style: solid;
     border-bottom-width: 5px;
-    background-image: url('https://i.imgur.com/QrTEPeQ.png');
+    background-image: url('https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png');
 }
 
 .header-button-large {
@@ -537,7 +537,7 @@ margin-right: 1px;
     border-bottom-color:var(--button2-shadow-color);
     background-color:var(--button2-background-color);
     color:var(--button2-text-color);
-    background-image: url(https://i.imgur.com/QrTEPeQ.png);
+    background-image: url(https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png);
 }
 
 .header-button-addtocart {
@@ -632,7 +632,7 @@ margin-right: 1px;
 
 #giftActions .giftActionInput {
  background-color:var(--button2-shadow-color);
- color:var(--button2-text-color); 
+ color:var(--button2-text-color);
  padding-left:10px;
  padding-right:10px;
  margin-right:10px;
@@ -647,7 +647,7 @@ margin-right: 1px;
     line-height: 28px;
     letter-spacing: -1px;
     text-transform: uppercase;
-    color:var(--button2-text-color); 
+    color:var(--button2-text-color);
     margin-right:10px;
 }
 
@@ -726,7 +726,7 @@ margin-right: 1px;
     display: inline-block;
     transition: margin-top 0.3s, border-bottom-width 0.3s; /* Add transition here */
     border-radius: 7px;
-    background-image: url('https://i.imgur.com/QrTEPeQ.png');
+    background-image: url('https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png');
 }
 
 .serverSelectionButton:hover {
@@ -753,7 +753,7 @@ margin-right: 1px;
     display: inline-block;
     transition: margin-top 0.3s, border-bottom-width 0.3s; /* Add transition here */
     border-radius: 7px;
-    background-image: url('https://i.imgur.com/QrTEPeQ.png');
+    background-image: url('https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png');
 }
 
 
@@ -991,7 +991,7 @@ vertical-align: top;
     mix-blend-mode: multiply;
     opacity: 0.6;
     backdrop-filter: blur(1px) saturate(0.5);
-    background-image: url('https://i.imgur.com/QrTEPeQ.png');
+    background-image: url('https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png');
 }
 
 .productSectionFeatureContainer {
@@ -1023,7 +1023,7 @@ vertical-align: top;
     mix-blend-mode: multiply;
     opacity: 0.6;
     backdrop-filter: blur(1px) saturate(0.5);
-    background-image: url('https://i.imgur.com/QrTEPeQ.png');
+    background-image: url('https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png');
 }
 
 .pageLineTitles {
@@ -1159,14 +1159,14 @@ vertical-align: top;
 .pageLineItemQuantitySelectionDisabled {
     color: #2a2a2a;
     text-shadow: #161616 0px -1px 0px;
-    opacity: 0.3; 
+    opacity: 0.3;
 }
 
 .pageLineItemQuantitySelectionDisabled:hover {
     color: #2a2a2a;
     text-shadow: #161616 0px -1px 0px;
     opacity: 0.3;
-    cursor:not-allowed; 
+    cursor:not-allowed;
 }
 
 
@@ -1213,7 +1213,7 @@ vertical-align: top;
     background-color: var(--button2-background-color);
     color: var(--button2-text-color);
     border-bottom-color: var(--button2-shadow-color);
-    background-image: url(https://i.imgur.com/QrTEPeQ.png);
+    background-image: url(https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png);
 }
 
 .icon-checkout {
@@ -1224,7 +1224,7 @@ vertical-align: top;
     background-color: var(--button2-background-color);
     color: var(--button2-text-color);
     border-bottom-color: var(--button2-shadow-color);
-    background-image: url(https://i.imgur.com/QrTEPeQ.png);
+    background-image: url(https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png);
     width: 100%;
     text-align: center;
     padding: 17px 11px;
@@ -1257,7 +1257,7 @@ vertical-align: top;
     mix-blend-mode: multiply;
     opacity: 0.6;
     backdrop-filter: blur(1px) saturate(0.5);
-    background-image: url('https://i.imgur.com/QrTEPeQ.png');
+    background-image: url('https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png');
 }
 
 
@@ -1436,7 +1436,7 @@ vertical-align: top;
     border-bottom-right-radius: 10px;
     border-bottom:solid 2px var(--button-shadow-color);
     border-right:solid 2px var(--button-shadow-color);
-    background-image: url('https://i.imgur.com/QrTEPeQ.png');
+    background-image: url('https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png');
 }
 
 .productPageTagContainer {
@@ -1505,7 +1505,7 @@ vertical-align: top;
     position: relative;
     overflow: hidden;
     box-shadow: inset 0px 2px 10px #313131;
-    margin-bottom: 15px;   
+    margin-bottom: 15px;
 }
 
 .cartCheckoutLineContainer {
@@ -1519,7 +1519,7 @@ vertical-align: top;
     position: relative;
     overflow: hidden;
     box-shadow: inset 0px 2px 10px #313131;
-    margin-bottom: 15px;   
+    margin-bottom: 15px;
 }
 
 .productItemDisplay {
@@ -1537,7 +1537,7 @@ vertical-align: top;
     mix-blend-mode: multiply;
     opacity: 0.6;
     backdrop-filter: blur(1px) saturate(0.5);
-    background-image: url('https://i.imgur.com/QrTEPeQ.png');
+    background-image: url('https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png');
 }
 
 .productItemAmount {
@@ -1616,7 +1616,7 @@ vertical-align: top;
 }
 
 .topbar-account a {
-    color:var(--topbar-link-color); 
+    color:var(--topbar-link-color);
 }
 
 .topbar-account a i {
@@ -1659,7 +1659,7 @@ span.cart-number {
     border-bottom-style: solid;
     border-bottom-width: 5px;
     border-left: 1px solid var(--button2-shadow-color);
-    background-image: url('https://i.imgur.com/QrTEPeQ.png');
+    background-image: url('https://cdn.paynow.gg/images/templates/eclipse/QrTEPeQ.png');
 }
 
 
@@ -1815,7 +1815,7 @@ a.social-media-item {
 @media (max-width: 768px) {
     .pageTitle {
         font-size: 48px;
-        line-height: 48px; 
+        line-height: 48px;
     }
     .pageSubtitle {
         font-size: 18px;
@@ -1858,7 +1858,7 @@ a.social-media-item {
         line-height:22px;
         }
     .btn-empty-cart
-    { 
+    {
         font-size: 13px;
         line-height: 23px;
     }

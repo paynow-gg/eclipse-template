@@ -20,7 +20,7 @@
               {
                 "id": "background-img-url",
                 "name": "Background Image",
-                "default": "https://i.imgur.com/Qr5rhGJ.jpeg",
+                "default": "https://cdn.paynow.gg/images/templates/eclipse/Qr5rhGJ.jpeg",
                 "description": "The page background image.",
                 "type": "url"
             },
@@ -900,7 +900,7 @@
           {
             "id": "footer-background-img-url",
             "name": "Background Image",
-            "default": "https://i.imgur.com/mApsecF.jpeg",
+            "default": "https://cdn.paynow.gg/images/templates/eclipse/mApsecF.jpeg",
             "type": "url"
           },
           {
@@ -924,7 +924,7 @@
           {
             "id": "footer-logo-image",
             "name": "Logo Image",
-            "default": "https://i.imgur.com/Pmhtuqh.png",
+            "default": "https://cdn.paynow.gg/images/templates/eclipse/Pmhtuqh.png",
             "type": "url"
           },
           {
@@ -1015,7 +1015,7 @@
                   "footer-bottombar-link-url": "/legal/privacy-policy",
                   "footer-bottombar-new-window": true,
                   "footer-bottombar-link-icon": "<i class=\"fa-solid fa-shield-halved\"></i>"
-                } 
+                }
             ],
             "nested_options": [
               {
@@ -1118,7 +1118,7 @@
           {
             "id": "cart-empty-image",
             "name": "Cart Empty Image",
-            "default": "https://i.imgur.com/MKWFVBY.png",
+            "default": "https://cdn.paynow.gg/images/templates/eclipse/MKWFVBY.png",
             "type": "url"
           }
         ]
