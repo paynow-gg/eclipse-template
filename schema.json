@@ -15,22 +15,23 @@
               "id": "custom-logo",
               "name": "Custom Logo Image",
               "description": "Image link to use custom logo.",
-              "type": "url"
-          },
-              {
-                "id": "background-img-url",
-                "name": "Background Image",
-                "default": "https://cdn.paynow.gg/images/templates/eclipse/Qr5rhGJ.jpeg",
-                "description": "The page background image.",
-                "type": "url"
+              "type": "url",
+              "default": "https://cdn.paynow.gg/images/templates/eclipse/VB8gnlT.png"
             },
-              {
-                  "id": "support_url",
-                  "name": "Support URL",
-                  "default": "",
-                  "description": "URL to a website where your customers can receive support.",
-                  "type": "textarea"
-              }
+            {
+              "id": "background-img-url",
+              "name": "Background Image",
+              "default": "https://cdn.paynow.gg/images/templates/eclipse/lCvgiCC.jpeg",
+              "description": "The page background image.",
+              "type": "url"
+            },
+            {
+              "id": "support_url",
+              "name": "Support URL",
+              "default": "",
+              "description": "URL to a website where your customers can receive support.",
+              "type": "textarea"
+            }
           ]
       },
       {
@@ -227,7 +228,7 @@
           {
             "id": "content-background-image",
             "name": "Background Image",
-            "default": "",
+            "default": "https://cdn.paynow.gg/images/templates/eclipse/IQdlrXI.jpeg",
             "type": "url"
           },
           {
@@ -481,7 +482,7 @@
               {
                 "id": "navlink-server-selection-background-image",
                 "name": "Background Image",
-                "default": "",
+                "default": "https://cdn.paynow.gg/images/templates/eclipse/IQdlrXI.jpeg",
                 "type": "url"
               },
               {
