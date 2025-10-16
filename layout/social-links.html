@@ -1,0 +1,23 @@
+<div class="flex gap-5 footer-links md:justify-end justify-center w-full md:w-1/2">
+    {% if config("twitch") %}
+        <a class="btn-info social-media-item twitch" href="{{ config("twitch") }}" target="_blank"><i class="fa-brands fa-twitch"></i></a>
+    {% endif %}
+    {% if config("discord") %}
+        <a class="btn-info social-media-item discord" href="{{ config("discord") }}" target="_blank"><i class="fa-brands fa-discord"></i></a>
+    {% endif %}
+    {% if config("youtube") %}
+        <a class="btn-info social-media-item youtube" href="{{ config("youtube") }}" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+    {% endif %}
+    {% if config("twitter") %}
+        <a class="btn-info social-media-item twitter" href="{{ config("twitter") }}" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+    {% endif %}
+    {% if config("instagram") %}
+        <a class="btn-info social-media-item instagram" href="{{ config("instagram") }}" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+    {% endif %}
+    {% if config("facebook") %}
+        <a class="btn-info social-media-item facebook" href="{{ config("facebook") }}" target="_blank"><i class="fa-brands fa-square-facebook"></i></a>
+    {% endif %}
+    {% if config("tiktok") %}
+        <a class="btn-info social-media-item tiktok" href="{{ config("tiktok") }}" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+    {% endif %}
+</div>

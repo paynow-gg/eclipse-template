@@ -1,0 +1,20 @@
+{% if cart.lines|length > 0 %}
+<div class="productSectionHeading"><i class="fa-solid fa-circle-check icon-checkout"></i> Checkout</div>
+<div class="pageDivider"></div>
+<div class="cartCheckoutLineContainer p-4">
+    <div class=" productSectionFeatureDisplay">
+        <div class="grid grid-cols-6 gap-2 items-center pr-4 pageLineTitles">
+            <div class="flex flex-col col-span-2 justify-center items-start">Total</div>
+            <div class="flex flex-col col-span-4 items-end justify-end" style="position:relative;">
+                <span class="pageLineItemPrice pageLineItemPriceCartTotal">${{ cart.total | money }}<span class="storeCurrency pageLineItemCurrency">{{ store.currency }}</span></span> 
+            </div>
+        </div>
+    </div>
+    <div class="productSectionFeatureBackground"></div>
+</div>
+
+
+
+<a href="/cart/checkout" class="btn btn-checkout">Proceed to checkout</a>
+
+{% endif %}

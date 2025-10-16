@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!-- START: Theme Variables -->
+{% set productBackgroundImage = null %}
+{% set matchedProduct = null %}
+{% for configProduct in config("products") %}
+    {% if product.id == configProduct['product-id'] %}
+    {% set matchedProduct = configProduct %}
+    {% endif %}
+{% endfor %}
+{% set hasFeatures = false %}
+{% for configItem in config("product-features") %}
+    {% if product.id == configItem['product-id'] %}
+        {% set hasFeatures = true %}
+    {% endif %}
+{% endfor %}
+{% set hasItems = false %}
+{% for configItem in config("product-items") %}
+    {% if product.id == configItem['product-id'] %}
+        {% set hasItems = true %}
+    {% endif %}
+{% endfor %}
+{% set productBackgroundImage = matchedProduct['product-background-image']|default(config('content-background-image')) %}
+<!-- END: Theme Variables -->
+<div class="productPage" data-product-slug="{{ product.slug }}">  
+    {% include 'product/page-links.html' %}
+<div data-productID="{{product.id}}" class="productSection" {% if productBackgroundImage != "" %} style="background-image:url({{ productBackgroundImage }}); background-size: cover; background-repeat: no-repeat; background-position: center;" {% endif %}>
+    <div class="container mx-auto flex flex-col md:flex-row items-start md:justify-between md:gap-2">
+        <div class="flex flex-col items-start w-full md:w-2/5 lg:w-1/2">
+            {% include 'product/image.html' %}
+        </div>
+        <div class="flex flex-col w-full md:w-3/5 lg:w-1/2">
+            {% include 'product/discount.html' %}
+            {% include 'product/prices.html' %}
+            {% include 'product/buttons.html' %}
+        </div>
+    </div>
+    {% include 'product/divider.html' %}
+    <div class="container mx-auto flex flex-col md:flex-row items-start md:justify-between md:gap-10">
+        <div class="flex flex-col items-start {% if not matchedProduct['product-howtoredeem'] and not hasFeatures %}w-full{% else %}w-full md:w-1/2{% endif %}">
+            {% include 'product/description.html' %}
+            {% include 'product/items.html' %}
+            {% include 'product/chatcommands.html' %}
+        </div>
+        {% if matchedProduct['product-howtoredeem'] or hasFeatures %}
+        <div class="flex flex-col justify-end w-full  md:w-1/2">
+            {% include 'product/features.html' %}
+            {% include 'product/howtoredeem.html' %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+</div>
+
+
+{% include 'product/floating-bottom.html' %}
+{% endblock %}

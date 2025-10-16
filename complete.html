@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="pageSectionContainer">
+    {% set contentBackgroundImage = config('content-background-image') %}
+    <div class="pageSection  " {% if contentBackgroundImage != "" %} style="background-image:url({{ contentBackgroundImage }}); background-size: cover; background-repeat: no-repeat; background-position: center;" {% endif %}>
+        <div class="ml-4 mr-4 w-full text-center flex flex-col items-center justify-center">
+            {% if config("checkout-page-image") %}
+                <img class="mb-4" src="{{ config("checkout-page-image")}}">
+            {% endif %}
+            <h1 class="pageTitle">{{ config("checkout-page-title") }}</h1>
+            <div class="pageDivider"></div>
+            {% if config("checkout-default-text-hide") == 'false' %}
+                <div class="checkoutThankYouDefaultMessage">{{ complete.text | raw }}</div>
+            {% else %}
+                {% if config("checkout-page-thankyou-text") %}
+                    <div class="checkoutThankYouMessage">{{ config("checkout-page-thankyou-text") | raw }}</div>
+                {% endif %}
+                {% if config("checkout-page-confirmation-text") %}
+                    <div class="checkoutConfirmationMessage">{{ config("checkout-page-confirmation-text") | raw }}</div>
+                {% endif %}
+            {% endif %}
+            {% if config("checkout-page-button-link") %}
+                <a class="btn btn-checkoutConfirmation mt-5" href="{{ config("checkout-page-button-link") }}">{{ config("checkout-page-button-text") }}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

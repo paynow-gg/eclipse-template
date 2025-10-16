@@ -1,0 +1,67 @@
+{% set urlParts = request.url|split('?') %}
+{% set baseUrl = urlParts[0] %}
+{% set query = urlParts|length > 1 ? urlParts[1]|split('&') : [] %}
+{% set filteredQuery = [] %}
+{% for param in query %}
+    {% if param|slice(0,9) != 'currency=' %}
+        {% set filteredQuery = filteredQuery|merge([param]) %}
+    {% endif %}
+{% endfor %}
+{% if filteredQuery|length %}
+    {% set filteredUrl = baseUrl ~ '?' ~ filteredQuery|join('&') %}
+{% else %}
+    {% set filteredUrl = baseUrl %}
+{% endif %}
+{% set currencyPath = filteredUrl ~ (filteredQuery|length ? '&' : '?') %}
+
+
+{% set currencies = config('topbar-currency-options')|split(',') %}
+
+<a id="currencySelection" href="javascript:void(0)" class="text-right">
+    <i class="fa-solid fa-square-caret-up"></i> {{ store.currency }}
+</a>
+
+<ul class="currenciesList hidden">
+  {% for cur in currencies %}
+    {% set isActive = (store.currency == cur) %}
+    <li>
+      <a href="{{ currencyPath ~ 'currency=' ~ cur }}"
+         class="{% if isActive %}active{% endif %}">
+         {% if isActive %}
+           <i class="fa-solid fa-circle-check mr-1" aria-hidden="true"></i>
+         {% else %}
+           <i class="fa-regular fa-circle mr-1" aria-hidden="true"></i>
+         {% endif %}
+         {{ cur }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const currencySelection = document.getElementById('currencySelection');
+  const currenciesList = document.querySelector('.currenciesList');
+  const caretIcon = currencySelection.querySelector('i');
+
+  currencySelection.addEventListener('click', () => {
+    currenciesList.classList.toggle('hidden');
+    currencySelection.classList.toggle('currencySelectionOpen');
+    caretIcon.classList.toggle('fa-square-caret-up');
+    caretIcon.classList.toggle('fa-square-caret-down');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (
+      !currenciesList.classList.contains('hidden') &&
+      !currencySelection.contains(e.target) &&
+      !currenciesList.contains(e.target)
+    ) {
+      currenciesList.classList.add('hidden');
+      currencySelection.classList.remove('currencySelectionOpen');
+      caretIcon.classList.remove('fa-square-caret-down');
+      caretIcon.classList.add('fa-square-caret-up');
+    }
+  });
+});
+</script>

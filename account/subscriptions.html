@@ -1,0 +1,75 @@
+{% if account_view == "subscriptions" or account_view == "subscription-detail" %}
+    <h1 class="pageTitle">Subscriptions</h1>
+    {% if account_view == "subscription-detail" %}
+       <div class="pageSubtitle">Viewing subscription: {{ subscription.pretty_id }}</div>
+       {% set subscriptions = [subscription] %}
+    {% endif %}
+                <div class="pageDivider"></div>
+                    {% if subscriptions %}
+                    <div class="hidden md:grid-cols-4 md:grid gap-4 items-center pl-4 pr-4 pageLineTitles">
+                        <div class="flex flex-col justify-center items-start">Product</div>
+                            <div class="flex flex-col justify-center items-start">Dates</div>
+                            <div class="flex flex-col justify-center items-start">Amount</div>
+                            <div class="flex flex-col items-end justify-end"></div>
+                    </div>
+                    {% for subscription in subscriptions %}
+                    <div class="pageSectionFeatureContainer p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-4 items-center pageSectionFeatureDisplay">
+                            <div class="flex flex-col justify-center items-start">
+                            <span class="pageLineItemTitle">{{ subscription.product_name }}</span>
+                            <span class="pageLineItemTransactionID">{{ subscription.pretty_id }}</span>
+                            {% if subscription.status == 'active' %}
+                            <span class="pageLineItemSubtitle mt-1 pageLineItemStatusActive">{{ subscription.status }}</span>
+                            {% else %}
+                            <span class="pageLineItemSubtitle mt-1 pageLineItemStatusInactive">Inactive</span>
+                            {% endif %}
+                            </div>
+
+
+                                <div class="flex md:flex-col flex-row justify-start items-start">
+                                    <span class="mr-2 md:mr-0"><span class="pageLineItemSubtitle">Activated:</span> <span class="pageLineItemDescription">{{ subscription.active_at|time_diff }}</span></span>
+                                    {% if subscription.status == 'canceled' %}
+                                    <span class="mr-2 md:mr-0"><span class="pageLineItemSubtitle">Canceled:</span> <span class="pageLineItemDescription">{{ subscription.canceled_at|time_diff }}</span></span>
+                                    {% else %}
+                                    <span><span class="pageLineItemSubtitle">Renews:</span> <span class="pageLineItemDescription">{{ subscription.current_period_end|time_diff }}</span></span>
+                                    {% endif %}
+                                </div>
+    
+                                {% if subscription.status != 'canceled' %}
+                                <div class="flex flex-col justify-center items-start">
+                                    <span class="pageLineItemPrice">{{ subscription.total_amount_str }}</span>
+                                    <span class="pageLineItemInterval">Every {{ subscription.interval_value }} {{ subscription.interval_scale }}</span>
+                                </div>
+                                {% else %}
+                                <div class="flex flex-col justify-center items-start"></div>
+                                {% endif %}
+
+                                <div class="flex items-center text-end justify-start md:justify-end">
+                                    {% if subscription.status != 'canceled' %}
+                                            {% if config("account-cancel-hide") == 'false' %}
+                                                <form method="POST" action="/account/subscriptions/{{ subscription.id }}/cancel">
+                                                    <button class="btn btn-cancelSubscription">{{ config("account-subscription-cancel-button-text") }}</button>
+                                                </form>
+                                            {% else %}
+                                            <div class=" flex flex-row-reverse md:flex-row items-center md:text-end text-start mt-2 md:mt-0">
+                                                <span class="newSubscriptionMessage ">{{ config("account-cancel-hide-message") }}</span>
+                                                <div class="newSubscriptionMessageIcon mr-2 md:mr-0"><i class="fa-solid fa-circle-check"></i></div>
+                                            </div>
+                                            {% endif %}
+                                    {% endif %}
+                                    {% if subscription.status == 'canceled' %}
+                                        <span class="subscriptionCanceled">Canceled</span>
+                                    {% endif %}
+                                </div>
+
+                        </div>
+                        <div class="pageSectionFeatureBackground"></div>
+                        </div>          
+                    {% endfor %}
+                    {% else %}
+                    <div class="no-orders-message">
+                        <div class="nothingFound">You have no subscriptions associated with this account.</div>
+                        <a href="/" class="btn">Return to our store</a>
+                    </div>
+                {% endif %}
+{% endif %}

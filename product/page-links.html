@@ -1,0 +1,89 @@
+<div class="pageLinksContainer">
+
+    <!-- Left-aligned links -->
+    <ul class="pageLinks pageLinksLeft">
+        <li>
+            {% if request.query("tag") %}
+            <a class="gobackPageLink" href="/products?tag={{ request.query("tag") }}"><i class="fa-solid fa-chevron-left"></i> Go Back</a>
+            {% else %}
+            <a class="gobackPageLink" href="/"><i class="fa-solid fa-chevron-left"></i> Go Back</a>
+            {% endif %}
+        </li>
+    </ul>
+
+    <!-- Right-aligned links -->
+    <ul class="pageLinks pageLinksRight">
+        <li class="pageLinkMobileTitle">
+            Server Navigation <span class="pageLinksOverlayClose btn"><i class="fa-solid fa-xmark"></i></span>
+        </li>
+    {% if request.query("tag") %}
+        {% for productLinks in products %}
+            {% set matchedProduct = null %} <!-- Reset matchedProduct -->
+            {% for configProduct in config("product-selection") %}
+                {% if productLinks.id == configProduct['product-selection-id'] %}
+                    {% set matchedProduct = configProduct %}
+                {% endif %}
+            {% endfor %}
+            {% for tag in productLinks.tags %}
+                {% if tag.slug == request.query("tag") %}
+                        <li><a {% if productLinks.id == product.id %} class="selectedPageLink" {% endif %}
+                            href="/products/{{ productLinks.slug }}?tag={{ request.query("tag") }}">
+                            {% if productLinks.id == product.id %}
+                            <i class="fa-solid fa-circle-check"></i>
+                            {% else %}
+                            <i class="fa-regular fa-circle"></i>
+                            {% endif %}
+                            
+                            {{ matchedProduct['product-selection-title'] | default(productLinks.name) }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    </ul>
+
+    {% if request.query("tag") %}
+    <a class="gobackPageLink pageLinksGoBackMobile" href="/products?tag={{ request.query("tag") }}"><i class="fa-solid fa-chevron-left"></i> Go Back</a>
+    {% else %}
+    <a class="gobackPageLink pageLinksGoBackMobile" href="/"><i class="fa-solid fa-chevron-left"></i> Go Back</a>
+    {% endif %}
+
+    {% if request.query("tag") %}
+    <button class="pageLinksDropdown pageLinksDropdownProduct">
+        {% for productLinks in products %}
+            {% set matchedProduct = null %} <!-- Reset matchedProduct -->
+            {% for configProduct in config("product-selection") %}
+                {% if productLinks.id == configProduct['product-selection-id'] %}
+                    {% set matchedProduct = configProduct %}
+                {% endif %}
+            {% endfor %}
+            {% for tag in productLinks.tags %}
+                {% if tag.slug == request.query("tag") %}
+                            {% if productLinks.id == product.id %}
+                            <i class="fa-solid fa-circle-check"></i> {{ matchedProduct['product-selection-title'] | default(productLinks.name) }}
+                            {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        <i class="fa-solid fa-chevron-down dropdown-arrow"></i> <!-- Add dropdown arrow -->
+    </button>
+    {% endif %}
+
+</div>
+
+{% if request.query("tag") %}
+    <div class="pageLinksOverlay"></div>
+    <script>
+        document.querySelectorAll('.pageLinksDropdown, .pageLinksOverlay, .pageLinksOverlayClose').forEach((element) => {
+        element.addEventListener('click', function () {
+            const pageLinksMenu = document.querySelector('.pageLinksRight');
+            const pageLinksOverlay = document.querySelector('.pageLinksOverlay');
+
+            const isMenuVisible = pageLinksMenu.style.display === 'flex';
+            pageLinksMenu.style.display = isMenuVisible ? 'none' : 'flex';
+            pageLinksOverlay.style.display = isMenuVisible ? 'none' : 'block';
+        });
+    });
+    </script>
+{% endif %}

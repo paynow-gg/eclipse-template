@@ -1,0 +1,19 @@
+<div class="pageLinksContainer">
+
+    <!-- Left-aligned links -->
+    <ul class="pageLinks pageLinksLeft">
+        <li>
+            {% if request.query("tag") %}
+            <a class="gobackPageLink" href="/products?tag={{ request.query("tag") }}"><i class="fa-solid fa-chevron-left"></i> Go Back</a>
+            {% else %}
+            <a class="gobackPageLink" href="/"><i class="fa-solid fa-chevron-left"></i> Continue Shopping</a>
+            {% endif %}
+        </li>
+    </ul>
+
+    {% if request.query("tag") %}
+    <a class="gobackPageLink pageLinksGoBackMobile" href="/products?tag={{ request.query("tag") }}"><i class="fa-solid fa-chevron-left"></i> Go Back</a>
+    {% else %}
+    <a class="gobackPageLink pageLinksGoBackMobile" href="/"><i class="fa-solid fa-chevron-left"></i> Continue Shopping</a>
+    {% endif %}
+</div>

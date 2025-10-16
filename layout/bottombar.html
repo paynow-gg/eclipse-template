@@ -1,0 +1,34 @@
+{% if config("footer-bottombar-hide") != 'true' %}
+<div class="bottombar">
+    <div class="pageContainer mx-auto">
+    <div class="md:flex md:justify-between md:items-center ">
+        {% if config("footer-bottombar-left-links") != '' %}
+        <div class="flex gap-5 footer-links md:justify-start justify-center">
+            {% for link in config("footer-bottombar-left-links") %}
+                <a href="{{ link['footer-bottombar-link-url'] }}" 
+                   {% if link['footer-bottombar-link-new-window'] %}target="_blank" rel="noopener noreferrer"{% endif %}>
+                   {% if config("footer-bottombar-link-icon") != '' %}
+                   {{ link['footer-bottombar-link-icon'] | raw }}
+                   {% endif %}
+                    {{ link['footer-bottombar-link-title'] }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if config("footer-bottombar-right-links") != '' %}
+    <div class="flex gap-5 footer-links  md:justify-end justify-center">
+        {% for link in config("footer-bottombar-right-links") %}
+            <a href="{{ link['footer-bottombar-link-url'] }}" 
+               {% if link['footer-bottombar-new-window'] %}target="_blank" rel="noopener noreferrer"{% endif %}>
+               {% if config("footer-bottombar-link-icon") != '' %}
+               {{ link['footer-bottombar-link-icon'] | raw }}
+               {% endif %}
+               {{ link['footer-bottombar-link-title'] }}
+            </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+    </div>
+    </div>
+</div>
+{% endif %}

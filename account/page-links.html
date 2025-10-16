@@ -1,0 +1,51 @@
+<div class="pageLinksContainer">
+    <ul class="pageLinks pageLinksLeft ">
+        <li class="pageLinkMobileTitle">
+            Account Navigation <span class="pageLinksOverlayClose btn"><i class="fa-solid fa-xmark"></i></span>
+        </li>
+            <li {% if account_view == "orders" %}class="pageLinksDropdownMobileSelected"{% endif %}>
+                <a {% if account_view == "orders" %} class="selectedPageLink" {% endif %} href="/account">
+                    <i class="fa-solid fa-list"></i> Orders
+                </a>
+            </li>
+            <li {% if account_view == "subscriptions" or account_view == "subscription-detail" %}class="pageLinksDropdownMobileSelected"{% endif %}>
+                <a {% if account_view == "subscriptions" or account_view == "subscription-detail" %} class="selectedPageLink" {% endif %} href="/account/subscriptions">
+                    <i class="fa-solid fa-arrows-spin"></i> Subscriptions
+                </a>
+            </li>
+            <li {% if account_view == "inventory-items" %}class="pageLinksDropdownMobileSelected"{% endif %}>
+                <a {% if account_view == "inventory-items" %} class="selectedPageLink" {% endif %} href="/account/inventory-items">
+                    <i class="fa-solid fa-box-archive"></i> Items
+                </a>
+            </li>
+    </ul>
+    <button class="pageLinksDropdown">
+        {% if account_view == "orders" %}
+            <i class="fa-solid fa-list"></i> Orders
+        {% endif %}
+        {% if account_view == "subscriptions" %}
+            <i class="fa-solid fa-arrows-spin"></i> Subscriptions
+        {% endif %}
+        {% if account_view == "subscription-detail" %}
+            <i class="fa-solid fa-arrows-spin"></i> Subscriptions
+        {% endif %}
+        {% if account_view == "inventory-items" %}
+            <i class="fa-solid fa-box-archive"></i> Items
+        {% endif %}
+        <i class="fa-solid fa-chevron-down dropdown-arrow"></i> <!-- Add dropdown arrow -->
+    </button>
+</div>
+<div class="pageLinksOverlay"></div>
+
+<script>
+    document.querySelectorAll('.pageLinksDropdown, .pageLinksOverlay, .pageLinksOverlayClose').forEach((element) => {
+    element.addEventListener('click', function () {
+        const pageLinksMenu = document.querySelector('.pageLinks');
+        const pageLinksOverlay = document.querySelector('.pageLinksOverlay');
+
+        const isMenuVisible = pageLinksMenu.style.display === 'flex';
+        pageLinksMenu.style.display = isMenuVisible ? 'none' : 'flex';
+        pageLinksOverlay.style.display = isMenuVisible ? 'none' : 'block';
+    });
+});
+</script>

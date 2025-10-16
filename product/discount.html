@@ -1,0 +1,11 @@
+{% if product.pricing.active_sale and product.price != 0.00 and product.stock.available_to_purchase != false %}
+<div class="container items-end justify-end">
+<div class="productPageTagContainer text-start md:text-end">
+<div class="productPageTag productPageTagSale">
+    {{ product.pricing.active_sale.name }}:
+    {% if product.pricing.active_sale.discount_type == 'amount' %}Up to ${{ product.pricing.active_sale.discount_amount/100 }} Off{% endif %}
+    {% if product.pricing.active_sale.discount_type == 'percent' %}Up to {{ product.pricing.active_sale.discount_amount/10 }}% Off{% endif %}
+</div>
+</div>
+</div>
+{% endif %}

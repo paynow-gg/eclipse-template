@@ -1,0 +1,7 @@
+<div class="flex flex-col items-center space-y-2 w-full">
+{% if config("cart-empty-image") %}
+<img class="cartEmptyImage" src="{{config("cart-empty-image")}}">
+{% endif %}
+<div class="nothingFound" style="margin-bottom:30px;">Your cart is empty.</div>
+<a href="/" class="btn">Back to Store</a>
+</div>

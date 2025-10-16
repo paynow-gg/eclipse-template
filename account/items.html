@@ -1,0 +1,75 @@
+{% if account_view == "inventory-items" %}
+                <h1 class="pageTitle">Items</h1>
+                <div class="pageDivider"></div>
+                {% if inventory_items %}
+                <div class="hidden md:grid-cols-4 md:grid gap-4 items-center pl-4 pr-4 pageLineTitles">
+                    <div class="flex flex-col justify-center items-start">Items</div>
+                        <div class="flex flex-col justify-center items-start">Status</div>
+                        <div class="flex flex-col justify-center items-start">Dates</div>
+                        <div class="flex flex-col items-end justify-end"></div>
+                </div>
+                    {% for item in inventory_items %}
+
+
+                    <div class="pageSectionFeatureContainer p-4">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-0 md:gap-4 items-center pageSectionFeatureDisplay">
+                            <div class="flex flex-col justify-center items-start">
+                            <span class="pageLineItemTitle">{{ item.product.name }}</span>
+                            <span class="pageLineItemTransactionID">{{ subscription.pretty_id }}</span>
+                            </div>
+
+                                <div class="flex flex-col justify-center items-start">
+                                    {% if item.state == 'active' %}
+                                    <span class="pageLineItemSubtitle pageLineItemStatusActive">{{ item.state }}</span>
+                                    {% elseif item.state == 'used' %}
+                                    <span class="pageLineItemSubtitle pageLineItemStatusActive">Active</span>
+                                    <span class="pageLineItemSubtitle">Recurring</span>
+                                    {% else %}
+                                    <span class="pageLineItemSubtitle">{{ item.state }}</span>
+                                    {% endif %}
+                                </div>
+    
+                                <div class="flex md:flex-col flex-row justify-start items-start mb-2 md:mb-0">
+                                    {% if item.state == 'used' %}
+                                        {% if item.active_at %}
+                                        <span class="mr-2 md:mr-0"><span class="pageLineItemSubtitle">Activated:</span> <span class="pageLineItemDescription">{{ item.active_at|time_diff }}</span></span>
+                                        {% elseif item.added_at %}
+                                        <span class="mr-2 md:mr-0"><span class="pageLineItemSubtitle">Activated:</span> <span class="pageLineItemDescription">{{ item.added_at|time_diff }}</span></span>
+                                        {% endif %}
+                                        {% if item.removed_at %}
+                                        <span class="mr-2 md:mr-0"><span class="pageLineItemSubtitle">Expires:</span> <span class="pageLineItemDescription">N/A</span></span>
+                                        {% elseif item.expires_at %}
+                                        <span class="mr-2 md:mr-0"><span class="pageLineItemSubtitle">Expires:</span> <span class="pageLineItemDescription">{{ item.expires_at|time_diff }}</span></span>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if item.active_at %}
+                                        <span class="mr-2 md:mr-0"><span class="pageLineItemSubtitle">Activated:</span> <span class="pageLineItemDescription">{{ item.active_at|time_diff }}</span></span>
+                                        {% elseif item.added_at %}
+                                        <span class="mr-2 md:mr-0"><span class="pageLineItemSubtitle">Added:</span> <span class="pageLineItemDescription">{{ item.added_at|time_diff }}</span></span>
+                                        {% endif %}
+                                        {% if item.removed_at %}
+                                        <span class="mr-2 md:mr-0"><span class="pageLineItemSubtitle">Removed:</span> <span class="pageLineItemDescription">{{ item.removed_at|time_diff }}</span></span>
+                                        {% elseif item.expires_at %}
+                                        <span class="mr-2 md:mr-0"><span class="pageLineItemSubtitle">Expires:</span> <span class="pageLineItemDescription">{{ item.expires_at|time_diff }}</span></span>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="flex items-center text-end justify-start md:justify-end">
+
+                                    {% if item.subscription_id %}
+                                    <a class="btn btn-viewSubscription" href="/account/subscriptions/{{ item.subscription_id }}">{{ config("account-subscriptions-view-button-text") }}</a>
+                                {% endif %}
+                                </div>
+
+                        </div>
+                        <div class="pageSectionFeatureBackground"></div>
+                        </div> 
+                    {% endfor %}
+                    {% else %}
+                    <div class="no-orders-message">
+                        <div class="nothingFound">You have no items associated with this account.</div>
+                        <a href="/" class="btn">Return to our store</a>
+                    </div>
+                {% endif %}
+{% endif %}

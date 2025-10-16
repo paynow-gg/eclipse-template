@@ -1,0 +1,20 @@
+{% set text_box_module = null %}
+
+{% for module in modules_details %}
+    {% if module.id == "text_box" %}
+        {% set text_box_module = module %}
+    {% endif %}
+{% endfor %}
+
+{% if text_box_module and text_box_module.data.settings %}
+<div class="card module">
+    <div class="module-header">
+        <h2 class="module-title">{{ text_box_module.data.settings.header }}</h2>
+    </div>
+    <div class="module-body">
+        <div>{{ text_box_module.data.settings.content | raw }}</div>
+    </div>
+</div>
+{% else %}
+    <p>No text box content available.</p>
+{% endif %}

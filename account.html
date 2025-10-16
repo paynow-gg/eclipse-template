@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="flex flex-col items-center justify-center text-center w-full h-full mb-5 page-title-container">
+    {% if config("account-title-image") %}
+    <img src="{{ config("account-title-image") }}" alt="{{ config("account-title") }}" class="mb-2">
+    {% else %}
+    <div class="page-heading">{{ config("account-title") }}</div>
+    {% endif %}
+    <div class="page-subheading">{{ config("account-subtitle") }}</div>
+</div>
+
+{% set contentBackgroundImage = config('content-background-image') %}
+
+<div class="pageSectionContainer" >
+    {% include 'account/page-links.html' %}
+    <div class="pageSection" {% if contentBackgroundImage != "" %} style="background-image:url({{ contentBackgroundImage }}); background-size: cover; background-repeat: no-repeat; background-position: center;" {% endif %}>
+        <div class="ml-4 mr-4 mb-4 mt-5 w-full">
+            {% include 'account/orders.html' %}
+            {% include 'account/subscriptions.html' %}
+            {% include 'account/items.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

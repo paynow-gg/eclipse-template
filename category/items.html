@@ -1,0 +1,21 @@
+{% set matchingItems = [] %}
+
+{% for configItem in config('product-items') %}
+  {% if product.id == configItem['product-id'] and configItem['product-item-feature'] %}
+    {% set matchingItems = matchingItems|merge([configItem]) %}
+  {% endif %}
+{% endfor %}
+
+{% if matchingItems|length > 0 %}
+  <div class="productItemListContainer">
+    <div class="flex flex-wrap justify-evenly mx-auto items-center">
+      {% for item in matchingItems %}
+        <div class="flex flex-col justify-center items-center productItemDisplay">
+          <img style="min-width: 40px; max-width:40px;" src="{{ item['product-item-image'] }}">
+          <span class="productItemAmount">{{ item['product-item-amount'] }}</span>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="productItemListBackground"></div>
+  </div>
+{% endif %}

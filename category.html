@@ -1,0 +1,168 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{#
+<script nonce="MjY3MjA4MDMwNSwyMDU0ODkxMDYw">
+    // Load product to modal
+    const loadProduct = (slug) => {
+        document.getElementById('modal-content').innerHTML = "";
+        const spinner = document.getElementById(`spinner-${slug}`);
+        spinner.classList.toggle('hidden');
+
+        fetch(`/products/${slug}`)
+            .then(async response => {
+                if (!response.ok) {
+                    alert(await response.text());
+                    return;
+                }
+
+                document.getElementById('modal').classList.toggle('hidden');
+                document.getElementById('modal-content').innerHTML += await response.text();
+                spinner.classList.toggle('hidden');
+            })
+    };
+</script>#}
+
+{% set currencySymbols = {
+    'AUD': '$',
+    'BRL': 'R$',
+    'CAD': '$',
+    'EUR': '€',
+    'NOK': 'kr',
+    'NZD': '$',
+    'PLN': 'zł',
+    'GBP': '£',
+    'SEK': 'kr',
+    'USD': '$'
+  } %}
+
+  
+<div class="flex flex-col items-center justify-center text-center w-full h-full mb-5 page-title-container">
+    {% if config("product-selection-title-image") %}
+    <img src="{{ config("product-selection-title-image") }}" alt="{{ config("product-selection-title") }}" class="mb-2">
+    {% else %}
+    {% if config("product-selection-title") %}
+    <div class="page-heading">{{ config("product-selection-title") }}</div>
+    {% else %}
+    <div class="page-heading">{{ activeTag.name }}</div>
+    {% endif %}
+    {% endif %}
+    {% if config("product-selection-subtitle") %}
+    <div class="page-subheading">{{ config("product-selection-subtitle") }}</div>
+    {% else %}
+    <div class="page-subheading">{{ activeTag.description|raw }}</div>
+    {% endif %}
+</div>
+
+
+<div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 container mx-auto" style="margin-bottom:60px;">
+
+    {% for product in products %}
+    {% set productBackgroundImage = null %}
+    {% set matchedProduct = null %} <!-- Reset matchedProduct -->
+    
+    {% for configProduct in config("product-selection") %}
+        {% if product.id == configProduct['product-selection-id'] %}
+            {% set matchedProduct = configProduct %}
+        {% endif %}
+    {% endfor %}
+    
+    {% set productBackgroundImage = matchedProduct['product-selection-background-image']|default(config('content-background-image')) %}
+    
+    {% if productBackgroundImage != "" %}
+        <div data-productID="{{product.id}}" style="background-image:url({{ productBackgroundImage }}); background-size: cover; background-repeat: no-repeat; background-position: center;" class="productSelection text-center">
+    {% else %}
+        <div data-productID="{{product.id}}" class="productSelection text-center">
+    {% endif %}
+
+    
+    {% include "category/tags.html" %}
+    
+           
+
+
+    {% if matchedProduct %}
+    <a href="/products/{{ product.slug }}?tag={{ activeTag.slug }}" data-remote="/products/{{ product.slug }}">    
+        {% if matchedProduct['product-selection-image-hide'] == true and matchedProduct['product-selection-image-hide'] == null %}
+        {% if product.image_url %}
+        <img class="package-img" alt="{{ product.name }}" src="{{ product.image_url }}" />
+        {% endif %}
+        {% endif %}
+
+
+
+
+        {% if matchedProduct['product-selection-image'] %}
+        <img src="{{ matchedProduct['product-selection-image'] }}" alt="{{ product.name }}" class="w-full h-auto">
+        {% else %}
+        <div class="productSubtitle">{{ matchedProduct['product-selection-subtitle'] }}</div>
+        <div class="productTitle">{{ matchedProduct['product-selection-title'] }}</div>
+        {% endif %}
+
+
+        {% include "category/items.html" %}
+
+
+        {% if matchedProduct['product-selection-short-description'] %}
+        <div class="productDescription">{{ matchedProduct['product-selection-short-description'] }}</div>
+        {% endif %}
+    </a>
+    {% else %}
+    <!-- Fallback if no server matched -->
+    <div class="productTitle">{{ product.name }}</div>
+    {% endif %}
+
+
+    
+        {% if product.stock.available_to_purchase %}
+        <div class="productPriceContainer">
+        {% if product.price == 0.00 %}
+        <span class="productPrice">FREE</span>
+        {% else %}
+        {% if product.pricing.active_sale %}
+            <span class="productPrice productPriceDiscounted"><div class="productPriceDiscountedCross"></div>{{ currencySymbols[store.currency] }}{{ product.pricing.price_original|money }}</span>
+            <span class="productPrice">{{ currencySymbols[store.currency] }}{{ product.price|money }}<span class="storeCurrency">{{ store.currency }}</span></span>
+        {% else %}
+            <span class="productPrice">{{ currencySymbols[store.currency] }}{{ product.price|money }}<span class="storeCurrency">{{ store.currency }}</span></span>
+        {% endif %}
+        {% endif %}
+        </div>
+        {% if matchedProduct['product-selection-recurring-timeperiod'] %}
+        <div class="productRecurringPeriod">{{ matchedProduct['product-selection-recurring-timeperiod'] }}</div>
+        {% endif %}
+        {% else %}
+        <div class="productPriceContainer">
+        <span class="productPrice">OUT OF STOCK</span>
+        </div>
+        <div class="productRecurringPeriod"></div>
+        {% endif %}
+
+
+
+
+
+    
+    {% if product.stock.available_to_purchase %}
+        <a href="/products/{{ product.slug }}?tag={{ activeTag.slug }}" data-remote="/products/{{ product.slug }}?tag={{ activeTag.slug }}" class="productSelectionButton">
+            {% if config("product-selection-button-text") %}
+                {{ config("product-selection-button-text") }}
+            {% else %}
+                Buy Now
+            {% endif %}
+        </a>
+    {% else %}
+    <a href="/products/{{ product.slug }}?tag={{ activeTag.slug }}" data-remote="/products/{{ product.slug }}?tag={{ activeTag.slug }}" class="productSelectionButton">View Details</a>
+    {% endif %}
+    </div>
+{% endfor %}
+
+
+</div>
+
+<div class="flex  justify-evenly items-center"  style="margin-bottom:60px;">
+<a href="/" class="btn btn-go-back">Go Back</a>
+</div>
+
+</div>
+
+{% endblock %}

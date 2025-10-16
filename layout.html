@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+{% include 'layout/head.html' %}
+<body class="body body{% if '/products/' in request.path %}Product{% elseif '/products' in request.path %}Category{% elseif '/cart' in request.path %}Cart{% elseif '/account' in request.path %}Account{% else %}Main{% endif %}">
+{% include 'layout/topbar.html' %}
+{% if config("background-img-url") %}
+<div class="mainContainer" style="background-image: url('{{ config("background-img-url") }}');">
+{% endif %}
+{% include 'layout/header.html' %}
+{% include 'layout/notification.html' %}
+<div class="pageContainer mx-auto !min-h-[calc(100vh-16.5rem)]">
+    <div class="grid grid-cols-12 gap-4 mt-8">
+        <div class="lg:col-span-12 col-span-12">
+            <div class="main-content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+{% if config("background-img-url") %}
+</div>
+{% endif %}
+{% include 'module.recent_payments.html' %}
+{% include 'layout/bottombar.html' %}
+{% include 'layout/footer.html' %}
+{% include 'layout/paynow.html' %}
+</body>
+</html>

@@ -1,0 +1,9 @@
+{% if matchedProduct['product-howtoredeem'] %}
+    <div class="productSectionHeading"><i class="fa-solid fa-box-open"></i> How to Redeem</div>
+    <div class="productHowToRedeemContainer p-4">
+        <div class=" productSectionFeatureDisplay">
+            <div class="productHowToRedeem">{{ matchedProduct['product-howtoredeem'] | raw }}</div>
+        </div>
+        <div class="productSectionFeatureBackground"></div>
+    </div>
+{% endif %}

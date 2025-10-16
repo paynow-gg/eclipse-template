@@ -1,0 +1,114 @@
+<style>
+:root {
+    --page-title-text-color: {{ config("page-title-text-color") }};
+    --page-subtitle-text-color: {{ config("page-subtitle-text-color") }};
+    {% if config("header-background-color-hide") == 'true' %}
+    --header-background-color: transparent;
+    {% else %}
+    --header-background-color: {{ config("header-background-color") }};
+    {% endif %}
+    --background-color: {{ config("background-color") }};
+    --overlay-background-color: {{ config("overlay-background-color") }}cc;
+    
+
+    --header-button-alt-text-color: {{ config("header-button-alt-text-color") }};
+    --header-link-color: {{ config("header-link-color") }};
+    --header-link-color-active: {{ config("header-link-color-active") }};
+
+
+    --topbar-background-color: {{ config("topbar-background-color") }};
+    --topbar-text-color: {{ config("topbar-text-color") }};
+    --topbar-link-color: {{ config("topbar-link-color") }};
+    --topbar-link-hover-color: {{ config("topbar-link-hover-color") }};
+    --topbar-border-color: {{ config("topbar-border-color") }};
+    --topbar-link-icon-color: {{ config("topbar-link-icon-color") }};
+    --topbar-link-icon-hover-color: {{ config("topbar-link-icon-hover-color") }};
+    --footer-background-color: {{ config("footer-background-color") }};
+    --footer-text-color: {{ config("footer-text-color") }};
+    --footer-link-color: {{ config("footer-link-color") }};
+    --footer-link-hover-color: {{ config("footer-link-hover-color") }};
+    --footer-link-icon-color: {{ config("footer-link-icon-color") }};
+    --footer-link-icon-hover-color: {{ config("footer-link-icon-hover-color") }};
+    --footer-copyright-text-color: {{ config("footer-copyright-text-color") }};
+    --footer-disclaimer-text-color: {{ config("footer-disclaimer-text-color") }};
+    --footer-disclaimer-icon-color: {{ config("footer-disclaimer-icon-color") }};
+    --footer-bottombar-background-color: {{ config("footer-bottombar-background-color") }};
+    --footer-bottombar-border-color: {{ config("footer-bottombar-border-color") }};
+    
+    --content-background-color: {{ config("content-background-color") }};
+    --content-heading-alt-color: {{ config("content-heading-alt-color") }};
+    --content-heading-color: {{ config("content-heading-color") }};
+    --content-text-color: {{ config("content-text-color") }};
+    --content-text-alt-color: {{ config("content-text-alt-color") }};
+    --content-border-color: {{ config("content-border-color") }};
+    --content-shadow-color: {{ config("content-shadow-color") }};
+    --content-lineitem-text: {{ config("content-lineitem-text") }};
+    --content-lineitem-text-strong: {{ config("content-lineitem-text-strong") }};
+    --content-lineitem-alt-text: {{ config("content-lineitem-alt-text") }};
+    --content-lineitem-highlight-text: {{ config("content-lineitem-highlight-text") }};
+    --content-lineitem-alt-highlight-text: {{ config("content-lineitem-alt-highlight-text") }};
+    --content-lineitem-background: {{ config("content-lineitem-background") }};
+    --content-lineitem-border: {{ config("content-lineitem-border") }};
+    --content-price-color: {{ config("content-price-color") }};
+    --content-price-alt-color: {{ config("ontent-price-alt-color") }};
+    --content-icon: {{ config("content-icon") }};
+    --content-tab-background-color: {{ config("content-tab-background-color") }};
+    --content-tab-text-color: {{ config("content-tab-text-color") }};
+    
+    
+    --button-background-color: {{ config("button-background-color") }};
+    --button-shadow-color: {{ config("button-shadow-color") }};
+    --button-text-color: {{ config("button-text-color") }};
+    --button2-background-color: {{ config("button2-background-color") }};
+    --button2-shadow-color: {{ config("button2-shadow-color") }};
+    --button2-text-color: {{ config("button2-text-color") }};
+    --button3-background-color: {{ config("button3-background-color") }};
+    --button3-shadow-color: {{ config("button3-shadow-color") }};
+    --button3-text-color: {{ config("button3-text-color") }};
+
+
+    --tag-text-color-mostpopular: {{ config("tag-text-color-mostpopular") }};
+    --tag-text-color-sale: {{ config("tag-text-color-sale") }};
+    --tag-text-color-new: {{ config("tag-text-color-new") }};
+    --tag-background-color-mostpopular: {{ config("tag-background-color-mostpopular") }};
+    --tag-background-color-sale: {{ config("tag-background-color-sale") }};
+    --tag-background-color-new: {{ config("tag-background-color-new") }};
+    --tag-shadow-color-mostpopular: {{ config("tag-shadow-color-mostpopular") }};
+    --tag-shadow-color-sale: {{ config("tag-shadow-color-sale") }};
+    --tag-shadow-color-new: {{ config("tag-shadow-color-new") }};
+    --server-selection-battlemetrics-text-color: {{ config("server-selection-battlemetrics-text-color") }};
+    --server-selection-battlemetrics-icon-color: {{ config("server-selection-battlemetrics-icon-color") }};
+
+    /* Default colors */
+    --text-color: #A1A1AA;
+    --bg-color: #18181B;
+    --panel-body: #18181B;
+    --border-color: #3F3F46;
+    --border: 1px solid var(--border-color);
+    --border-top: linear-gradient(0deg, #18181B, #18181B),
+        linear-gradient(180deg, rgba(39, 39, 42, 0.2) 0%, rgba(24, 24, 27, 0) 21.88%);
+    --shadow: 0px 0px 2px 0px #000000;
+
+    /* Miscellaneous */
+    --first-color: #3F3F46;
+    --second-color: #27272A;
+    --input: #09090B;
+
+    --logo-height: 100px;
+    --btn-pad: 0.5rem;
+    --spacing-xs: 0.5rem;
+    --spacing-s: 1rem;
+    --spacing-m: 1.5rem;
+
+    --transition: 0.3s ease-out;
+}
+
+
+{% if config("google-fonts") %}
+        {% for font in config("google-fonts") %}
+            {{ font['google-font-classes'] | raw }} {
+                font-family: '{{ font['google-font-name'] }}', sans-serif;
+            }
+        {% endfor %}
+{% endif %}
+</style>

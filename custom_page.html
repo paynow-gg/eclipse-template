@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+{% set contentBackgroundImage = config('content-background-image') %}
+
+<div class="pageSectionContainer" >
+    <div class="pageSection" {% if contentBackgroundImage != "" %} style="background-image:url({{ contentBackgroundImage }}); background-size: cover; background-repeat: no-repeat; background-position: center;" {% endif %}>
+        <div class="ml-4 mr-4 mb-4 mt-5 w-full">
+            <h1 class="pageTitle">{{ title }}</h1>
+            <div class="pageDivider"></div>
+            {{ content|raw }}
+        </div>
+    </div>
+</div>
+
+
+
+<div class="border-top home-content">
+    {% include 'svgs/stripes.html' %}
+
+    <div class="home-content-sec content-field">
+        <h1 class="home-content-tit"></h1>
+
+        <div class="home-content-text prose !prose-zinc !prose-invert">
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

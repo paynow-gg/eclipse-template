@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="flex flex-col items-center justify-center text-center w-full h-full mb-5 page-title-container">
+    {% if config("cart-title-image") %}
+    <img src="{{ config("cart-title-image") }}" alt="{{ config("cart-title") }}" class="mb-2">
+    {% else %}
+    <div class="page-heading">{{ config("cart-title") }}</div>
+    {% endif %}
+    <div class="page-subheading">{{ config("cart-subtitle") }}</div>
+</div>
+{% set contentBackgroundImage = config('content-background-image') %}
+<div class="pageSectionContainer">
+    {% if cart.lines|length != 0 %}
+    {% include 'cart/page-links.html' %} 
+    {% endif %}
+    <div class="pageSection" {% if contentBackgroundImage != "" %} style="background-image:url({{ contentBackgroundImage }}); background-size: cover; background-repeat: no-repeat; background-position: center;" {% endif %}>
+        <div class="ml-4 mr-4 mb-4 mt-5 w-full flex flex-wrap">
+            {% if cart.lines|length == 0 %}
+            {% include 'cart/cart-empty.html' %} 
+            {% else %}
+            <div class="cartLineItemsContainer w-full lg:w-2/3 pr-0 md:pr-4 mb-4 lg:mb-0">
+                {% include 'cart/line-items.html' %}  
+            </div>
+            <div  class="cartCheckoutContainer w-full lg:w-1/3 pl-0 lg:pl-4">
+                {% include 'cart/checkout.html' %}  
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% include 'cart/popup.html' %}  
+{% endblock %}

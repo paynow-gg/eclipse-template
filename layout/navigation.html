@@ -1,0 +1,101 @@
+{% set pages_no_settings = [] %}
+{% for p in custom_pages %}
+  {% if not p.settings %}
+    {% set pages_no_settings = pages_no_settings|merge([p]) %}
+  {% endif %}
+{% endfor %}
+
+{% if pages_no_settings|length == 0 %}
+            {% if customer.id and config("header-hide-cart") == 'false' %}
+            <a href="/cart" class="flex md:hidden">
+                <div class="header-item header-button header-button-cart">
+                    <div class="header-cart">
+                        Cart
+                    </div>
+                </div><span class="cart-number">{{ cart.lines|length }}</span>
+            </a>
+            {% endif %}
+   <!-- Hide hamburger -->
+            {% else %}
+                <div class="header-account flex md:hidden justify-end gap-3 items-center">
+                    <a href="javascript:void(0)">
+                        <div class="header-item header-button header-button-hamburger">
+                            <i class="fa-solid fa-bars"></i>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+            
+            <div class="headerMobileMenu hidden">
+                <ul class="headerMobileMenuLinks" style="display: grid;">
+                    <li class="headerMobileMenuTitle">
+                        Main Navigation <span class="headerMobileMenuOverlayClose btn"><i class="fa-solid fa-xmark" aria-hidden="true"></i></span>
+                    </li>
+
+                    {% for custom_page in pages_no_settings %}
+                        {% if custom_page.path starts with '/' %}
+                            {% set page_parsed_path = custom_page.path %}
+                        {% else %}
+                            {% set page_parsed_path = '/' ~ custom_page.path %}
+                        {% endif %}
+                        <li>
+                            <a href="{{ page_parsed_path }}">
+                                {{ custom_page.title }}
+                            </a>
+                        </li>
+                    {% endfor %}
+
+                    {% if customer.id and config("header-hide-cart") == 'false' %}
+                        <li>
+                            <a href="/cart">
+                                Cart
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="headerMobileMenuOverlay hidden"></div>
+
+            <div class="header-account justify-end gap-3 items-center md:flex hidden">
+                {% for custom_page in pages_no_settings %}
+                    {% if custom_page.path starts with '/' %}
+                        {% set page_parsed_path = custom_page.path %}
+                    {% else %}
+                        {% set page_parsed_path = '/' ~ custom_page.path %}
+                    {% endif %}
+                    <a href="{{ page_parsed_path }}">
+                        <div class="header-button header-button-transparent {% if request.path == page_parsed_path %}header-button-active{% endif %}">
+                            {{ custom_page.title }}
+                        </div>
+                    </a>
+                {% endfor %}
+
+                {% if customer.id and config("header-hide-cart") == 'false' %}
+                    <a href="/cart">
+                        <div class="header-item header-button header-button-cart">
+                            <div class="header-cart">
+                                Cart
+                            </div>
+                        </div><span class="cart-number">{{ cart.lines|length }}</span>
+                    </a>
+                {% endif %}
+            </div>
+
+
+
+ <script>
+document.querySelectorAll('.header-button-hamburger, .headerMobileMenuOverlay, .headerMobileMenuOverlayClose').forEach((element) => {
+    element.addEventListener('click', function () {
+        const menu = document.querySelector('.headerMobileMenu');
+        const overlay = document.querySelector('.headerMobileMenuOverlay');
+        const isVisible = menu.classList.contains('hidden');
+
+        // Toggle the menu
+        menu.classList.toggle('hidden', !isVisible);
+
+        // Toggle overlay display
+        overlay.style.display = isVisible ? 'block' : 'none';
+    });
+});
+</script>           

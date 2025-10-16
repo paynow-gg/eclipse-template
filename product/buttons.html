@@ -1,0 +1,48 @@
+<div class="container mx-auto flex md:items-end md:justify-end " id="productButtons">
+    {% if product.stock.available_to_purchase == true %}
+    <div id="mainActions">
+        {% if available_gameservers %}
+        <div class="select-wrapper {% if available_gameservers|length == 1 %}hidden{% endif %}">
+            <select id="gameServerDropdown" name="gameServer" class="form-select appearance-none">
+                {% for gameServer in available_gameservers %}
+                    <option value="{{ gameServer.id }}">{{ gameServer.name }}</option>
+                {% endfor %}
+            </select>
+            <i class="fas fa-chevron-down"></i>
+            </div>
+        {% endif %}
+        {% if available_gameservers %}    
+        {% if product.allow_subscription %}
+            <button onclick="subscribeToProduct(); gtag('event', 'click', { 'event_category': 'Button', 'event_label': 'Subscribe to Product' });" class="header-button header-button-subscribe header-button-large {% if available_gameservers|length == 1 %}header-button-single-server{% endif %}">Subscribe</a>
+        {% endif %}
+        {% if product.allow_one_time_purchase and matchedProduct['product-addtocart-hide'] == false or product.allow_one_time_purchase and matchedProduct['product-addtocart-hide'] == null %}
+            <button onclick="addProductToCart(); gtag('event', 'click', { 'event_category': 'Button', 'event_label': 'Add to Cart' });" class="header-button header-button-large header-button-addtocart">Add to Cart</a>
+        {% endif %}
+        {% if product.allow_one_time_purchase %}
+            <button id="giftButton" onclick="toggleGiftActions(); gtag('event', 'click', { 'event_category': 'Button', 'event_label': 'Gift to Friend' });" class="header-button header-button-large header-button-gift">Gift</button>
+        {% endif %}
+        {% else %}
+        <div class="container flex flex-col items-start justify-start text-start md:items-end md:justify-end md:text-end">
+            <div class="productPriceContainer text-start md:text-end">
+              <button disabled class="header-button header-button-large">No Servers Available</button>
+        </div>
+        </div>
+        {% endif %}
+    </div>
+    <div id="giftActions" class="hidden flex">
+        <div class="giftActionsTitle">Gift</div>
+        <input type="text" id="idInput" placeholder="Enter {{ auth_provider == 'steam' ? 'SteamID64' : auth_provider }}" class="giftActionInput">
+        <button id="purchaseFromGift" onclick="handlePurchase('{{ auth_provider }}'); gtag('event', 'click', { 'event_category': 'Button', 'event_label': 'Add Gift to Cart' });" class="add-gift-btn"><i class="fa-solid fa-check"></i></button>
+        <button id="closeGift" onclick="toggleGiftActions(); gtag('event', 'click', { 'event_category': 'Button', 'event_label': 'Cancel Gift to Friend' });" class="close-gift"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    {% endif %}
+</div>
+
+{% if product.stock.available_to_purchase == true and product.allow_subscription %}
+<div class="subscriptionRenewal items-center flex w-full text-center md:text-right justify-center md:justify-end mt-1">
+    {{ matchedProduct['product-recurring-timeperiod'] }}
+</div>
+{% endif %}
+
+
+

@@ -1,0 +1,79 @@
+{% if config("footer-background-img-url") %}
+<footer style="background-image: url('{{ config("footer-background-img-url") }}');">
+{% else %}
+<footer>
+{% endif %}
+
+<div class="pageContainer mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-start gap-4">
+       {#{% for module in modules_details %}
+        <div class="module-item">
+            <p><strong>ID:</strong> {{ module.id }}</p>
+    
+            {% if module.data %}
+                <p><strong>Data:</strong></p>
+                <ul>
+                    {% for key, value in module.data %}
+                        <li>
+                            <strong>{{ key }}:</strong>
+                            
+                            {% if value is iterable %}
+                                <ul>
+                                    {% for sub_key, sub_value in value %}
+                                        <li><strong>{{ sub_key }}:</strong> {{ sub_value }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                {{ value }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No Data</p>
+            {% endif %}
+        </div>
+    {% endfor %} #} 
+    {% include 'module.text_box.html' %}
+        {% include 'module.payment_goal.html' %}
+    </div>
+</div>
+
+        <div class="pageContainer mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-4">
+                <!-- Column 1: Disclaimer Text -->
+                {% if config("footer-disclaimer-text") %}
+                <div class="flex-1">
+                    <p class="disclaimer-information">
+                        {% if config("footer-disclaimer-icon") %}
+                        {{ config("footer-disclaimer-icon") | raw }}
+                        {% endif %}
+                        <span class="disclaimerTitle">Disclaimer: </span>
+                        {{ config("footer-disclaimer-text") | raw }}
+                    </p>
+                </div>
+                {% endif %}
+        
+                <!-- Column 2: Social Media Icons -->
+                    {% include 'layout/social-links.html' %}
+            </div>
+        </div>
+
+
+        <div class="pageContainer mx-auto">
+        <!-- Center Aligned Nav Links -->
+            {% if config("footer-logo-image")%}
+            <div class="flex justify-center mt-5">
+                <img src="{{config("footer-logo-image")}}">
+            </div>
+            {% endif %}
+
+            {% if config("footer-copyright-text") %}
+            <div class="flex justify-center mt-2 text-center">
+            <div class="footer-copyright">
+                <span>©{{ 'now' | date('Y') }} {{ config("footer-copyright-text") }}</span>
+            </div>
+            </div>
+            {% endif %}
+    </div>
+</footer>

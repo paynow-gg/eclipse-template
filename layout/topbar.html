@@ -1,0 +1,51 @@
+{% if customer.id %}
+<div class="topbar-account">
+    <div class="pageContainer mx-auto flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between" style="position:relative;">
+        <!-- Left Column -->
+        <div class="flex items-center sm:justify-start justify-center gap-2">
+            {% if config('topbar-currency-hide') != 'true' %}
+            {% include 'layout/currency.html' %}
+            {% endif %}
+            {% if supports_customer_management %}
+            <a href="/account">
+                <i class="fa-solid fa-circle-user"></i> {{ customer.profile.name }}
+            </a>
+            {% endif %}
+        </div>
+        <!-- Right Column -->
+        
+        <div class="flex sm:justify-end justify-center">
+            {% if config("support_url") %}
+                    <a href="{{ config("support_url") }}" class="text-right mr-2">
+                        <i class="fa-solid fa-envelope"></i> Support
+                    </a>
+            {% endif %}
+            {% if supports_customer_management %}
+            <a href="/account" class="text-right mr-2">
+                <i class="fa-solid fa-gear"></i> Account
+            </a>
+            {% endif %}
+            <a href="/auth/sign-out" class="text-right">
+                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+            </a>
+        </div>
+    </div>
+</div>
+{% else %}
+
+<div class="topbar-account">
+    <div class="pageContainer mx-auto flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between" style="position:relative;">
+        <div class="flex items-center sm:justify-start justify-center">
+            {% include 'layout/currency.html' %}
+        </div>
+        
+       
+        
+        <div class="flex items-center sm:justify-end justify-center">
+            <a href="/auth/sign-in" class="text-right">
+                <i class="fa-solid fa-right-to-bracket"></i> Sign in
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}

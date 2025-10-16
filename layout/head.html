@@ -1,0 +1,31 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ store.name }}</title>
+    <link rel="shortcut icon" href="{{ favicon }}">
+
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="og:type" content="website">
+    <meta name="og:locale" content="en_EN">
+    <meta name="og:image:width" content="1200">
+    <meta name="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="og:site_name" content="{{ store.name }}">
+    <meta name="og:title" content="{{ store.name }}">
+    <meta name="og:image:alt" content="{{ store.name }}">
+    <meta name="theme-color" content="{{ config("main-color") }}">
+    <script src="https://kit.fontawesome.com/ed1f2e23f0.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="{{ asset('style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
+    {% if config("google-font-embed") %}
+    <style>
+            {{ config('google-font-embed') | raw }}
+    </style>
+{% endif %}
+    {% include 'style-imports.html' %}
+    <script src="https://cdn.tailwindcss.com?plugins=typography" nonce="MzQzMDQ1NjQ5MSwzMjA2ODk0MDcz"></script>
+    <script src="{{ asset("script.js") }}"></script>
+</head>

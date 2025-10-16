@@ -1,0 +1,41 @@
+
+{% set currencySymbols = {
+    'AUD': '$',
+    'BRL': 'R$',
+    'CAD': '$',
+    'EUR': '€',
+    'NOK': 'kr',
+    'NZD': '$',
+    'PLN': 'zł',
+    'GBP': '£',
+    'SEK': 'kr',
+    'USD': '$'
+  } %}
+
+{% if product.stock.available_to_purchase == false %}
+<div class="container flex flex-col items-start justify-start text-start md:items-end md:justify-end md:text-end mb-5 md:mb-0">
+    <div class="productPriceContainer text-start md:text-end">
+        <span class="productPrice">OUT OF STOCK</span>
+</div>
+</div>
+{% else %}
+<div class="container flex flex-col items-start justify-start text-start md:items-end md:justify-end md:text-end mb-5 md:mb-0">
+    <div class="productPriceContainer text-start md:text-end">
+        {% if product.price == 0.00 %}
+        <span class="productPrice productPriceDiscounted" style="margin-right:0px;">FREE</span>
+        {% else %}
+        {% if product.pricing.active_sale %}
+            <span class="productPrice productPriceDiscounted"><div class="productPriceDiscountedCross"></div>{{ currencySymbols[store.currency] }}{{ product.pricing.price_original|money }}</span>
+            <span class="productPrice" style="padding-right:40px;">{{ currencySymbols[store.currency] }}{{ product.price|money }}</span> <span class="storeCurrency">{{ store.currency }}</span>
+        {% else %}
+            <span class="productPrice" style="padding-right:40px;">{{ currencySymbols[store.currency] }}{{ product.price|money }}</span> <span class="storeCurrency">{{ store.currency }}</span>
+        {% endif %}
+        {% endif %}
+    </div>
+    {% if product.pricing.vat_rate %}
+    <div class="subscriptionRenewal items-left flex w-full text-left md:text-right justify-left md:justify-end">
+        Including {{ product.pricing.vat_rate.percentage }}% {{ product.pricing.vat_rate.vat_abbreviation }}
+    </div> 
+    {% endif %}
+</div>
+{% endif %}

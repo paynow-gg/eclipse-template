@@ -1,0 +1,198 @@
+{% set recent_payments_module = null %}
+
+{% for module in modules_details %}
+    {% if module.id == "recent_payments" %}
+        {% set recent_payments_module = module %}
+    {% endif %}
+{% endfor %}
+
+
+{% if recent_payments_module and recent_payments_module.data.orders %}
+  <style>
+    .sales-list-item {
+      position: fixed;
+      bottom: -150px; /* hidden initially */
+      right: 20px;
+      width: 300px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+      transition: bottom 0.5s;
+      z-index:1;
+    }
+    .sales-list-item.show {
+      bottom: 20px;
+    }
+    .sales-list-item-header {
+      display: block;
+    }
+    .popup-content {
+      display: flex;
+      align-items:start;
+      border:5px solid var(--content-border-color);
+      padding:10px;
+      border-radius: 10px;
+      background-color: var(--content-background-color);
+      box-shadow: var(--content-shadow-color) 0px 4px 0px;
+    }
+    .popup-icon {
+      flex-shrink: 0;
+      margin-right: 10px;
+      font-size: 24px;
+      color: var(--content-icon);
+    }
+    .popup-details {
+      flex-grow: 1;
+    }
+    .sales-list-message,
+    .sales-list-time,
+    .sales-list-item-header {
+      display: block;
+      font-weight:700;
+      text-transform: uppercase;
+    }
+    .sales-list-item-header {
+      font-size: 14px;
+      line-height: 14px;
+      width:100%;
+      border-bottom:1px solid var(--content-shadow-color);
+      padding-bottom:2px;
+      margin-bottom:5px;
+      color:var(--content-heading-alt-color);
+    }
+    .sales-list-message {
+      font-size: 22px;
+      line-height: 18px;
+      margin-bottom: 5px;
+      letter-spacing: -1px;
+      color:var(--content-text-color);
+    }
+    .sale-product-name {
+        color:var(--content-text-alt-color);
+    }
+    .sales-list-time {
+      font-size: 12px;
+      line-height: 12px;
+    }
+    .sale-avatar {
+        border:5px solid var(--content-border-color);
+    }
+  </style>
+
+  <div class="sales-list-item" id="recent-sale">
+      <div class="popup-content">
+        <div class="popup-icon" id="popup-icon">
+        </div>
+        <div class="popup-details">
+            <div class="sales-list-item-header" id="popup-header"></div>
+          <div class="sales-list-message" id="popup-message"></div>
+          <div class="sales-list-time" id="popup-time"></div>
+        </div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progress"></div>
+        </div>
+  </div>
+
+  <div id="sales-list" style="display: none;">
+    {% for order in recent_payments_module.data.orders|slice(0, recent_payments_module.data.settings.displayLimit) %}
+        <div class="sale-item">
+          <div class="sale-header">
+              {{ recent_payments_module.data.settings.header }}
+          </div>
+          <div class="sale-icon">
+            {% if order.customer and order.customer.steam and config('modules-recent-purchases-showname') == 'true' %}
+            <img src="{{ order.customer.steam.avatar_url }}" alt="Avatar" class="w-[48px] h-[48px] rounded-full sale-avatar">
+            {% else %}
+             <i class="fa-solid fa-circle-check"></i>
+            {% endif %}
+        </div>
+          <div class="sale-message">
+            {% if order.customer and order.customer.steam and config('modules-recent-purchases-showname') == 'true' %}
+            {{ order.customer.steam.name ?? order.customer.name }}
+            {% else %}
+              A customer
+            {% endif %}
+            bought 
+            {% if recent_payments_module.data.settings.displayPurchasedProduct %}
+                <span class="sale-product-name">
+                {% for line in order.lines %}
+                    {{ line.product_name }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+                </span>
+            {% endif %}
+            {% if recent_payments_module.data.settings.displayPriceOfPurchase %}
+            for
+            {{ order.total_amount != 0 ? order.total_amount | money_store_currency : "FREE" }}
+            {% endif %}
+          </div>
+          {% if recent_payments_module.data.settings.displayTimeOfPurchase %}
+            <div class="sale-time">
+                <i class="fa-regular fa-clock"></i> {{ order.completed_at | time_diff }}
+            </div>
+           {% else %}
+           <div class="sale-time" style="display:none;"></div>
+          {% endif %}
+        </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    function getRandomTime(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    
+    const saleElements = document.querySelectorAll('#sales-list .sale-item');
+    const salesData = Array.from(saleElements).map(item => {
+      return {
+        icon: item.querySelector('.sale-icon').innerHTML,
+        header: item.querySelector('.sale-header').innerHTML,
+        message: item.querySelector('.sale-message').innerHTML,
+        time: item.querySelector('.sale-time').innerHTML
+      };
+    });
+
+    const popupIcon = document.getElementById('popup-icon');
+    const recentSaleElem = document.getElementById('recent-sale');
+    const popupHeader = document.getElementById('popup-header');
+    const popupMessage = document.getElementById('popup-message');
+    const popupTime = document.getElementById('popup-time');
+    const progressElem = document.getElementById('progress');
+    
+    let currentIndex = Math.floor(Math.random() * salesData.length);
+    
+    const minGap = 5000;
+    const maxGap = 10000;
+    
+    function showRecentSale(index) {
+      const duration = getRandomTime(3000, 5000);
+      
+      popupIcon.innerHTML = salesData[index].icon;
+      popupHeader.innerHTML = salesData[index].header;
+      popupMessage.innerHTML = salesData[index].message;
+      popupTime.innerHTML = salesData[index].time;
+      
+      progressElem.style.transition = 'none';
+      progressElem.style.width = '0%';
+      void progressElem.offsetWidth;
+      progressElem.style.transition = `width ${duration}ms linear`;
+      progressElem.style.width = '100%';
+      
+      recentSaleElem.classList.add('show');
+      
+      setTimeout(() => {
+        recentSaleElem.classList.remove('show');
+        setTimeout(() => {
+          const gap = getRandomTime(minGap, maxGap);
+          setTimeout(() => {
+            currentIndex = Math.floor(Math.random() * salesData.length);
+            showRecentSale(currentIndex);
+          }, gap);
+        }, 500);
+      }, duration);
+    }
+    
+    const initialDelay = getRandomTime(2000, 5000);
+    setTimeout(() => {
+      showRecentSale(currentIndex);
+    }, initialDelay);
+  </script>
+{% endif %}

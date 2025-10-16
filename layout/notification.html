@@ -1,0 +1,5 @@
+{% if notification %}
+<div id="notification-alert" class="bg-red-500 text-gray-100 shadow-xl border border-[--border-color] px-4 py-3 text-xl fixed mr-4 lg:mr-0 lg:right-24 bottom-12 animate-bounce duration-[2000ms] transition-opacity">
+    {{ notification.message }}
+</div>
+{% endif %} 

@@ -1,0 +1,6 @@
+{% if matchedProduct['product-description-hide'] == false or matchedProduct['product-description-hide'] == null %}
+    <div class="productSectionHeading"><i class="fa-solid fa-circle-info"></i> Description</div>
+    <div class="productSectionDescriptionContainer">
+        {{ product.description | raw }}
+    </div>
+{% endif %}

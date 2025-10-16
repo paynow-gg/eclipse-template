@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<script>
+    function loadPlayerStats(battlemetricsID) {
+        const apiURL = `https://api.battlemetrics.com/servers/${battlemetricsID}`;
+        const populationDiv = document.getElementById(`serverPopulation_${battlemetricsID}`);
+        const locationDiv = document.getElementById(`serverLocation_${battlemetricsID}`);
+
+        // Hide both divs until data is loaded
+        populationDiv.style.display = "none";
+        locationDiv.style.display = "none";
+
+        // Fetch player data from Battlemetrics
+        fetch(apiURL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error fetching data: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const players = data.data.attributes.players || 0;
+                const maxPlayers = data.data.attributes.maxPlayers || 0;
+                const country = (data.data.attributes.country || "unknown").toLowerCase();
+
+                // Populate the player stats div
+                populationDiv.innerHTML = `<i class="fa-solid fa-user"></i> ${players}/${maxPlayers}`;
+                populationDiv.style.display = "block";
+
+                // Populate the location div
+                locationDiv.innerHTML = `<span class="fi fi-${country} fis"></span>`;
+                locationDiv.style.display = "block";
+            })
+            .catch(error => {
+                console.error("Failed to fetch server data:", error);
+            });
+    }
+</script>
+
+<div class="flex flex-col items-center justify-center text-center w-full h-full mb-5 page-title-container">
+    {% if config("server-selection-title-image") %}
+    <img src="{{ config("server-selection-title-image") }}" alt="{{ config("server-selection-title") }}" class="mb-2">
+    {% else %}
+    <div class="page-heading">{{ config("server-selection-title") }}</div>
+    {% endif %}
+    <div class="page-subheading">{{ config("server-selection-subtitle") }}</div>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 container mx-auto"  style="margin-bottom:100px;">
+    {% for navlink in navlinks %}
+        <!-- Check for a matching server -->
+        {% set matchedServer = null %}
+        {% for server in config("navlink-server-selection") %}
+            {% if navlink.name == server['navlink-server-selection-name'] %}
+                {% set matchedServer = server %}
+            {% endif %}
+        {% endfor %}
+        {% set serverBackgroundImage = matchedServer['navlink-server-selection-background-image']|default(config('content-background-image')) %}
+
+
+        {% if serverBackgroundImage != "" %}
+    <div style="background-image:url({{ serverBackgroundImage }}); background-size: cover;  background-repeat: no-repeat; background-position: center;" class="serverSelection text-center">
+    {% else %}
+    <div class="serverSelection text-center">
+    {% endif %}
+
+        <!-- Display server details if matched -->
+        {% if matchedServer %}
+        <a href="{% if matchedServer['navlink-server-selection-redirect'] is defined and matchedServer['navlink-server-selection-redirect'] %}
+                    {{ matchedServer['navlink-server-selection-redirect'] }}
+                 {% else %}
+                    {% if navlink.children|length > 0 %}#{% else %}products?tag={{ navlink.tag_query }}{% endif %}
+                 {% endif %}">
+            {% if matchedServer['navlink-server-selection-image'] %}
+            <img src="{{ matchedServer['navlink-server-selection-image'] }}" alt="{{ matchedServer['navlink-server-selection-title'] }}" class="w-full h-auto">
+            {% else %}
+            <div class="serverSubtitle">{{ matchedServer['navlink-server-selection-subtitle'] }}</div>
+            <div class="serverTitle">{{ matchedServer['navlink-server-selection-title'] }}</div>
+            {% endif %}
+            {% if matchedServer['navlink-server-selection-description'] %}
+            <div class="serverDescription">{{ matchedServer['navlink-server-selection-description'] }}</div>
+            {% endif %}
+        </a>
+        {% else %}
+        <!-- Fallback if no server matched -->
+        <div class="serverTitle">{{ navlink.name }}</div>
+        {% endif %}
+        
+        <!-- Select Server Button -->
+        <a href="{% if matchedServer and matchedServer['navlink-server-selection-redirect'] is defined and matchedServer['navlink-server-selection-redirect'] %}
+                     {{ matchedServer['navlink-server-selection-redirect'] }}
+                  {% else %}
+                     {% if navlink.children|length > 0 %}#{% else %}products?tag={{ navlink.tag_query }}{% endif %}
+                  {% endif %}" 
+           class="serverSelectionButton">
+           Select Server
+        </a>
+        {% if matchedServer["navlink-server-selection-battlemetricsID"] %}
+        <div class="serverPopulation" id="serverPopulation_{{ matchedServer['navlink-server-selection-battlemetricsID'] }}"></div>
+        <div class="serverLocation" id="serverLocation_{{ matchedServer['navlink-server-selection-battlemetricsID'] }}"></div>
+        <script>
+            loadPlayerStats('{{ matchedServer["navlink-server-selection-battlemetricsID"] }}');
+        </script>        
+        {% endif %}
+
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

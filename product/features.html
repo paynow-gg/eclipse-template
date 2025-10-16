@@ -1,0 +1,49 @@
+{% if hasFeatures %}
+<div class="productSectionHeading"><i class="fa-solid fa-star"></i> Features</div>
+<div class="productSectionFeatureContainer p-4">
+    <div class="flex flex-wrap mx-auto items-start">
+        {% for configItem in config("product-features") %}
+            {% if product.id == configItem['product-id'] %}
+            <div class="flex w-full md:w-1/2 productSectionFeatureDisplay mb-5">
+                <!-- Image Section -->
+                <div class="flex-shrink-0">
+                    {% if configItem['product-feature-image'] %}
+                    <div class="productFeatureImage" style="background-image:url({{ configItem['product-feature-image'] }});"></div>
+                    {% endif %}
+                </div>
+                <!-- Text Section -->
+                <div class="flex flex-col justify-start ml-1 mr-4 w-full">
+                    <div class="flex justify-between items-start w-full items-center">
+                        <!-- Title and Description -->
+                        <div class="flex flex-col">
+                            <div class="productFeatureName">{{ configItem['product-feature-name'] }}</div>
+                            {% if configItem['product-feature-description'] %}
+                            <div class="productFeatureDescription">{{ configItem['product-feature-description'] }}</div>
+                            {% endif %}
+                        </div>
+                        <!-- Arrow -->
+                        {% if configItem['product-feature-details'] or configItem['product-feature-command'] %}
+                        <button class="toggleArrow productFeaturesArrow self-start" onclick="toggleDetails(event, this)">
+                            <i class="fa fa-chevron-down"></i> <!-- Font Awesome Icon -->
+                        </button>
+                        {% endif %}
+                    </div>
+                    <!-- Details Section -->
+                    {% if configItem['product-feature-details'] or configItem['product-feature-command'] %}
+                    <div class="productDetails hidden w-full mt-2">
+                        {% if configItem['product-feature-details'] %}
+                        <div class="productFeatureDetails">{{ configItem['product-feature-details'] }}</div>
+                        {% endif %}
+                        {% if configItem['product-feature-command'] %}
+                        <div class="productFeatureCommand {% if configItem['product-feature-details'] %} productFeatureCommandBordered {% endif %}"><span class="productFeatureCommandTitle">Chat Command: </span>{{ configItem['product-feature-command'] }}</div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="productSectionFeatureBackground"></div>
+</div>
+{% endif %}

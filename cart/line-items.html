@@ -1,0 +1,72 @@
+                
+                
+                <div class="grid grid-cols-12 gap-2">
+               
+                <div class="flex flex-col col-span-8 items-start">
+                    <h2 class="pageTitle">Order</h2>
+                </div>
+                <div class="flex flex-col col-span-4 justify-end items-end">
+                    <a class="btn btn-empty-cart" href="/cart/empty">
+                        <i class="fa-solid fa-trash-can"></i> Empty Cart
+                    </a>
+                </div>
+                
+                </div>
+
+                <div class="pageDivider"></div>
+
+                <div class="hidden md:grid grid-cols-8 md:grid-cols-10 gap-2 items-center pl-4 pr-4 pageLineTitles">
+                    <div class="flex flex-col col-span-3 justify-center items-start">Product</div>
+                        <div class="flex flex-col col-span-2 justify-center items-start hidden md:flex">Price</div>
+                        <div class="flex flex-col col-span-2 justify-center items-start">Quantity</div>
+                        <div class="flex flex-col col-span-2 justify-center items-start">Total</div>
+                        <div class="flex flex-col col-span-1 items-end justify-end"></div>
+                </div>
+                    {% for line in cart.lines %}
+                    <div class="pageSectionFeatureContainer p-4">
+                        <div class="grid grid-cols-2 md:grid-cols-10 gap-0 items-center pageSectionFeatureDisplay">
+                            
+                            <div class="flex flex-col justify-center items-start col-span-1 md:col-span-3 mb-2 md:mb-0">
+                            <span class="pageLineItemTitle">{{ line.name }}</span>
+                            {% if line.selected_gameserver %}
+                                <span class="pageLineItemTransactionID">{{ line.selected_gameserver.name }}</span>
+                            {% endif %}
+
+                            </div>
+
+                                <div class="flex flex-col justify-center items-end md:items-start col-span-1 md:col-span-2 ">
+                                    <span class="pageLineItemPrice pageLineItemPriceAlt">${{ line.price | money }}<span class="storeCurrency pageLineItemCurrency">{{ store.currency }}</span></span>   
+                                </div>
+    
+                                <div class="flex flex-col justify-center items-start col-span-1 md:col-span-2">
+                                        <form class="pageLineItemQuantity flex gap-2  items-center" method="POST" action="/cart/set/{{ line.slug }}">
+                                            <div class="pageLineItemQuantitySelectionContainer">
+                                                <a class="pageLineItemQuantitySelectionDown {% if line.quantity == 1 %} pageLineItemQuantitySelectionDisabled {% endif %}" href="javascript:void(0);"><i class="fa-solid fa-caret-down"></i></a>
+                                            </div>
+                                            <div class="pageLineItemQuantityInputContainer">
+                                                <span class="pageLineItemInputPrepend">X{{ line.quantity }}</span>
+                                            </div>
+                                            <div class="pageLineItemQuantitySelectionContainer">
+                                                <a class="pageLineItemQuantitySelectionUp" href="javascript:void(0);"><i class="fa-solid fa-caret-up"></i></a>
+                                            </div>
+                                            <input class="pageLineItemInput pageLineItemInputInline" type="hidden" name="quantity" value="{{ line.quantity }}" {% if line.price==0.00 %}disabled="disabled" {% endif %} />
+                                        </form>
+                                </div>
+
+                                <div class="flex flex-col justify-center items-start col-span-2 mb-2 md:mb-0 hidden md:flex">
+                                    <span class="pageLineItemPrice  pageLineItemPriceAlt">${{ (line.price * line.quantity) | money }}<span class="storeCurrency pageLineItemCurrency">{{ store.currency }}</span></span>   
+                            </div>
+
+                                <div class="flex items-center justify-end col-span-1">
+                                    <a href="/cart/remove/{{ line.slug }}" class="btn btn-viewTrash"><i class="fa-solid fa-xmark"></i> <span class="sm:hidden">Delete Item</span></a>
+                                </div>
+
+                        </div>
+                        <div class="pageSectionFeatureBackground"></div>
+                        </div> 
+                    {% endfor %}
+
+
+
+
+             

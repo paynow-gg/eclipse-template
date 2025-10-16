@@ -1,0 +1,67 @@
+{% if available_gameservers %}
+    <div class="productFloatingBottom" {% if productBackgroundImage != "" %} style="background-image:url({{ productBackgroundImage }}); background-size: cover; background-repeat: no-repeat; background-position: center;" {% endif %}>
+        <div class="container mx-auto flex md:items-end md:justify-end ">
+            {% if product.stock.available_to_purchase == true %}
+            <div id="mainActions">
+                {% if available_gameservers %}
+                <div class="select-wrapper {% if available_gameservers|length == 1 %}hidden{% endif %}">
+                    <select id="gameServerDropdown" name="gameServer" class="form-select appearance-none">
+                        {% for gameServer in available_gameservers %}
+                            <option value="{{ gameServer.id }}">{{ gameServer.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <i class="fas fa-chevron-down"></i>
+                    </div>
+                {% endif %}    
+                {% if product.allow_subscription %}
+                    <button onclick="subscribeToProduct(); gtag('event', 'click', { 'event_category': 'Button', 'event_label': 'Subscribe to Product' });" class="header-button header-button-subscribe header-button-large {% if available_gameservers|length == 1 %}header-button-single-server{% endif %}">Subscribe</button>
+                {% endif %}
+                {% if product.allow_one_time_purchase and matchedProduct['product-addtocart-hide'] == false or product.allow_one_time_purchase and matchedProduct['product-addtocart-hide'] == null %}
+                    <button onclick="addProductToCart(); gtag('event', 'click', { 'event_category': 'Button', 'event_label': 'Add to Cart' });" class="header-button header-button-large header-button-addtocart">Add to Cart</button>
+                {% endif %}
+                {% if product.allow_one_time_purchase %}
+                    <a href="#mainActions" class="productFloatingBottomGiftLink"><i class="fa-solid fa-gift"></i> Gift to a Friend</a>
+                {% endif %}
+            </div>
+
+            {% endif %}
+        </div>
+        
+        {% if product.stock.available_to_purchase == true and product.allow_subscription %}
+        <div class="subscriptionRenewal items-center flex w-full text-center md:text-right justify-center md:justify-end mt-1">
+        {{ matchedProduct['product-recurring-timeperiod'] }}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        const productButtons = document.querySelector('#productButtons');
+        const floatingBottom = document.querySelector('.productFloatingBottom');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    floatingBottom.classList.add('visible');
+                } else {
+                    floatingBottom.classList.remove('visible');
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0,
+        });
+        if (productButtons) {
+            observer.observe(productButtons);
+        }
+    });
+    </script>
+
+
+    <style>
+        @media (max-width: 768px) {
+            .bodyProduct footer {
+                padding-bottom:200px;
+            }
+        }
+    </style>
+{% endif %}

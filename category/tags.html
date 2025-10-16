@@ -1,0 +1,15 @@
+    
+    {% if matchedProduct['product-selection-tag'] == "Popular" %}
+    <div class="productTag productTagPopular">🏆 Most Popular</div>
+    {% endif %}
+
+    {% if matchedProduct['product-selection-tag'] == "New" %}
+    <div class="productTag productTagNew">🌟 New</div>
+    {% endif %}
+
+    {% if product.pricing.active_sale  and product.price != 0.00 %}
+    <div class="productTag productTagSale">
+        {% if product.pricing.active_sale.discount_type == 'amount' %}Up to ${{ product.pricing.active_sale.discount_amount/100 }} Off{% endif %}
+        {% if product.pricing.active_sale.discount_type == 'percent' %}Up to {{ product.pricing.active_sale.discount_amount/10 }}% Off{% endif %}
+        </div>
+    {% endif %}

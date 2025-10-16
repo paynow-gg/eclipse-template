@@ -1,0 +1,25 @@
+<header class="mb-4 pt-2 pb-2">
+    <div class="pageContainer mx-auto">
+        <div class="header-top flex flex-row items-center justify-between flex-wrap">
+            <div class="header-logo flex">
+                <a href="/">
+                    {% if config('custom-logo') %}
+                    <img class="max-w-[200px] max-h-[75px] sm:max-w-[300px] md:max-w-[400px] lg:max-w-[500px] mx-auto py-2"
+                    alt="{{ store.name }}'s Logo"
+                    src="{{ config('custom-logo') }}" />
+                    {% else %}
+                    {% if store.logo_url %}
+                        <img class="max-w-[200px] max-h-[75px] sm:max-w-[300px] md:max-w-[400px] lg:max-w-[500px] mx-auto py-2"
+                             alt="{{ store.name }}'s Logo"
+                             src="{{ store.logo_url }}" />
+                    {% else %}
+                        <h1 class="storeName">{{ store.name }}</h1>
+                    {% endif %}
+                    {% endif %}
+                </a>
+            </div>
+            {% include "layout/navigation.html" %}
+            
+        </div>
+    </div>
+</header>

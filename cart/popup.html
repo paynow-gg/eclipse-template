@@ -1,0 +1,54 @@
+<div id="cartPopupOverlay" class="hidden"></div>
+<div id="cartPopup" class="hidden">
+    <div class="popupIcon"><i class="fa-regular fa-floppy-disk"></i></div>
+    <div class="popupTitle">Updating Cart</div>
+    <div class="popupDescription">Please wait for the page to reload.</div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const cartPopup = document.getElementById("cartPopup");
+    const cartPopupOverlay = document.getElementById("cartPopupOverlay");
+
+    function showPopup() {
+        cartPopupOverlay.classList.remove("hidden");
+        cartPopup.classList.remove("hidden");
+    }
+
+    // Attach event listeners to quantity down buttons
+    document.querySelectorAll(".pageLineItemQuantitySelectionDown").forEach(button => {
+        button.addEventListener("click", function () {
+            const form = button.closest("form");
+            const quantityInput = form.querySelector('input[name="quantity"]');
+            let currentQuantity = parseInt(quantityInput.value);
+
+            if (currentQuantity > 1) {
+                quantityInput.value = currentQuantity - 1; // Decrease quantity
+                showPopup(); // Show popup
+                form.submit(); // Submit the form
+            }
+        });
+    });
+
+    // Attach event listeners to quantity up buttons
+    document.querySelectorAll(".pageLineItemQuantitySelectionUp").forEach(button => {
+        button.addEventListener("click", function () {
+            const form = button.closest("form");
+            const quantityInput = form.querySelector('input[name="quantity"]');
+            let currentQuantity = parseInt(quantityInput.value);
+
+            quantityInput.value = currentQuantity + 1; // Increase quantity
+            showPopup(); // Show popup
+            form.submit(); // Submit the form
+        });
+    });
+
+    // Attach event listeners to trash (remove) buttons
+    document.querySelectorAll(".btn.btn-viewTrash").forEach(button => {
+        button.addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent default link behavior
+            showPopup(); // Show popup
+            window.location.href = button.href; // Redirect to the href
+        });
+    });
+});
+</script>
