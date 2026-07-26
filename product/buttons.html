@@ -11,7 +11,7 @@
             <i class="fas fa-chevron-down"></i>
             </div>
         {% endif %}
-        {% if available_gameservers %}    
+        {% if not product.single_game_server_only or available_gameservers %}    
         {% if product.allow_subscription %}
             <button onclick="subscribeToProduct(); gtag('event', 'click', { 'event_category': 'Button', 'event_label': 'Subscribe to Product' });" class="header-button header-button-subscribe header-button-large {% if available_gameservers|length == 1 %}header-button-single-server{% endif %}">Subscribe</a>
         {% endif %}
